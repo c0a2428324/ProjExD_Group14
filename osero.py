@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT + 80))
 pygame.display.set_caption("特殊ルールオセロ (プレイヤー vs CPU)")
 
 try:
-    # ### 修正点①: 文字サイズをさらに小さく ###
+    # 文字サイズをさらに小さく #
     font = pygame.font.SysFont("MS Gothic", 24)
     dialog_font = pygame.font.SysFont("MS Gothic", 32)
 except pygame.error:
@@ -38,15 +38,11 @@ class Board:
         
         self.fixed_stones = set()
         self.fix_charges = {PLAYER_BLACK: 2, PLAYER_WHITE: 2}
-        
-        # ### 修正点②: 角(隅)の定義を削除 ###
-        # self.corners = {(0, 0), (0, 7), (7, 0), (7, 7)} # この行を削除またはコメントアウト
 
     def opponent(self, player):
         return PLAYER_WHITE if player == PLAYER_BLACK else PLAYER_BLACK
 
     def can_place(self, x, y, player):
-        # ### 修正点②: 角(隅)に置けないという条件を削除 ###
         if self.grid[y][x] != 0:
             return False
         
@@ -94,7 +90,7 @@ class Game:
         self.message = "あなたの番です (黒)"
         self.state = "playing"
         self.pending_move = None
-        # CPUが固定を狙う戦略的なマス (角も含むように更新)
+        # CPUが固定を狙う戦略的なマス
         self.strategic_squares = {
             (0,0), (0,7), (7,0), (7,7), # 角
             (1,1), (1,6), (6,1), (6,6)  # 角の隣
@@ -189,7 +185,7 @@ class Game:
         q_text = dialog_font.render("この石を固定しますか？", True, WHITE)
         screen.blit(q_text, (self.dialog_rect.centerx - q_text.get_width()//2, self.dialog_rect.y + 30))
         self.yes_button = pygame.Rect(self.dialog_rect.x+50, self.dialog_rect.y+110, 120, 50)
-        self.no_button = pygame.Rect(self.dialog_rect.x+230, self.dialog_rect.y+110, 120, 50)
+        self.no_button = pygame.Rect(self.dialog_rect.x+230, self.dialog_rect.y+110, 150, 50)
         pygame.draw.rect(screen, BUTTON_COLOR, self.yes_button, border_radius=10)
         pygame.draw.rect(screen, BUTTON_COLOR, self.no_button, border_radius=10)
         yes_text = dialog_font.render("はい(Y)", True, WHITE)
